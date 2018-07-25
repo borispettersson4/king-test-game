@@ -19,6 +19,12 @@
     <Filter Include="Header Files\kinglib">
       <UniqueIdentifier>{6821ade4-45c6-4243-9e66-0f5cdb1a863b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game_scripts">
+      <UniqueIdentifier>{b9d761b1-e14d-4829-b024-e5b8a6ef776b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game_scripts">
+      <UniqueIdentifier>{980c13e7-daca-488b-ab83-a13a3a19787f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -42,6 +48,15 @@
     <ClCompile Include="..\external\include\king\SdlSurface.cpp">
       <Filter>Source Files\kinglib</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files\game_scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Gem.cpp">
+      <Filter>Source Files\game_scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Column.cpp">
+      <Filter>Source Files\game_scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\external\include\king\Engine.h">
@@ -64,6 +79,15 @@
     </ClInclude>
     <ClInclude Include="..\external\include\king\Updater.h">
       <Filter>Header Files\kinglib</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files\game_scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Gem.h">
+      <Filter>Header Files\game_scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Column.h">
+      <Filter>Header Files\game_scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

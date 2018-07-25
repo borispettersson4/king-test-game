@@ -20,6 +20,7 @@ namespace King {
 		};
 
 		Engine(const char* assetsDirectory);
+		Engine();
 		~Engine();
 
 		float GetLastFrameSeconds() const;

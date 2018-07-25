@@ -19,7 +19,7 @@
 
 
 namespace King {
-	static const int WindowWidth = 800;
+	static const int WindowWidth = 750;
 	static const int WindowHeight = 600;
 	static const float MaxFrameTicks = 300.0f;
 	static const float TextScale = 0.5f;
@@ -89,6 +89,11 @@ namespace King {
 		glLoadIdentity();
 		glOrtho(0.0f, WindowWidth, WindowHeight, 0.0f, -1.0f, 1.0f);
 		glMatrixMode(GL_MODELVIEW);
+	}
+
+	Engine::Engine() 
+	{
+		Engine("./assets");
 	}
 
 	Engine::~Engine() {

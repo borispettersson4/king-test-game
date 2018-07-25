@@ -57,6 +57,9 @@
     <ClCompile Include="Column.cpp">
       <Filter>Source Files\game_scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Slot.cpp">
+      <Filter>Source Files\game_scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\external\include\king\Engine.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files\game_scripts</Filter>
     </ClInclude>
     <ClInclude Include="Column.h">
+      <Filter>Header Files\game_scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Slot.h">
       <Filter>Header Files\game_scripts</Filter>
     </ClInclude>
   </ItemGroup>

@@ -31,6 +31,6 @@ public:
 	void display(King::Engine& engine);
 	void fall();
 	bool isMouseHovered(King::Engine& engine);
-	bool isMouseDragged(King::Engine& engine);
+	bool isMouseClicked(King::Engine& engine);
 };
 

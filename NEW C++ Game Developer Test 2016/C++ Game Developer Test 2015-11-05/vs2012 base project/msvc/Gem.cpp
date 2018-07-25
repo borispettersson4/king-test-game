@@ -93,12 +93,7 @@ bool Gem::isMouseHovered(King::Engine& engine)
 		);
 }
 
-bool Gem::isMouseDragged(King::Engine& engine)
+bool Gem::isMouseClicked(King::Engine& engine)
 {
-	bool isDragged = true;
-
-	if (!engine.GetMouseButtonDown() && !isMouseHovered(engine))
-		isDragged = false;
-
-	return isDragged;
+	return (engine.GetMouseButtonDown() && isMouseHovered(engine));
 }

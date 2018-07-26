@@ -16,6 +16,8 @@ Column::Column(float bottomX, float bottomY, int size)
 
 	setSize(size);
 
+	canDelete = true;
+
 }
 
 void Column::setSize(int size)
@@ -38,8 +40,9 @@ void Column::display(King::Engine& engine)
 	{
 			gems.at(i).display(engine);
 
-			if (gems.at(i).isMouseClicked(engine))
+			if (gems.at(i).isMouseClicked(engine) && canDelete)
 			{
+				canDelete = false;
 				deleteGem(i);
 			}
 		
@@ -71,7 +74,7 @@ Gem Column::getGem(int i)
 bool Column::isFull() {
 
 	bool full = true;
-	for (int i = 0; i < SIZE; i++)
+	for (int i = 0; i < slots.size(); i++)
 	{
 		if (slots[i].isEmpty())
 		{
@@ -86,21 +89,30 @@ bool Column::isFull() {
 void Column::slideDown()
 {
 	
-	for (int i = 0; i < slots.size() - 1; i++)
+	for (int i = 0; i < slots.size(); i++)
 	{
 		if (slots.at(i).isEmpty())
 		{
-			if (!slots.at(i + 1).isEmpty())
+			try
 			{
-				gems.at(i + 1).fall();
-
-				if (gems.at(i + 1).getY() >= slots.at(i + 1).getY())
+				if (!slots.at(i + 1).isEmpty() && gems.at(i).getY() < slots.at(i).getY())
 				{
-					slots.at(i).setGem(gems.at(i + 1));
+					gems.at(i).fall();
+				}
+				else 
+				{
+					slots.at(i).setGem(gems.at(i));
 					slots.at(i + 1).deleteGem();
+					gems.at(i).setY(slots.at(i).getY());
 				}
 			}
+			catch (exception e)
+			{
+				//canDelete = true;
+			}
 		}
+
+
 	}
 	
 }

@@ -44,6 +44,16 @@ void Gem::move(float x, float y)
 	yPos = y - yScale / 2;
 }
 
+void Gem::setX(float x) 
+{
+	xPos = x;
+}
+
+void Gem::setY(float y)
+{
+	xPos = y;
+}
+
 void Gem::display(King::Engine& engine)
 {
 	switch (gemType)
@@ -83,6 +93,7 @@ void Gem::display(King::Engine& engine)
 
 void Gem::fall() 
 {
+	for(int i = 0; i < 10; i++)
 	yPos++;
 }
 

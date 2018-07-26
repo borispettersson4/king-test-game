@@ -26,7 +26,8 @@ public:
 	float getY();
 	int getGemType();
 	void setGemType(int i);
-
+	void setX(float x);
+	void setY(float x);
 	void move(float x, float y);
 	void display(King::Engine& engine);
 	void fall();

@@ -17,6 +17,7 @@ protected:
 	float bottomPosX;
 	float bottomPosY;
 	float yScale;
+	bool canDelete;
 
 public:
 	Column();

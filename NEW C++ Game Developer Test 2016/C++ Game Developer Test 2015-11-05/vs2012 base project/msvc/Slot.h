@@ -5,7 +5,7 @@ class Slot
 private:
 	float xPos;
 	float yPos;
-	Gem currentGem;
+	Gem* currentGem;
 public:
 	Slot();
 	Slot(float x, float y);
@@ -19,6 +19,5 @@ public:
 	Gem* getGemPointer();
 	void setGem(Gem g);
 	void deleteGem();
-	bool isMouseClicked(King::Engine& engine);
 };
 

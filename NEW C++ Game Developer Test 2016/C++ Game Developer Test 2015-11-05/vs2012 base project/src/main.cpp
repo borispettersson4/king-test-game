@@ -37,8 +37,7 @@ public:
 		//g.display(mEngine);
 		//h.display(mEngine);
 		col.display(mEngine);
-
-		col.update(mEngine);
+		col.slideDown();
 		//col.slideDown();
 		//g.fall();
 

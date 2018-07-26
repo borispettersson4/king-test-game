@@ -9,7 +9,7 @@ Column::~Column()
 {
 }
 
-Column::Column(float bottomX, float bottomY, int size) 
+Column::Column(float bottomX, float bottomY, int size)
 {
 	bottomPosX = bottomX;
 	bottomPosY = bottomY;
@@ -22,50 +22,58 @@ void Column::setSize(int size)
 {
 	random_device rd;
 	mt19937 eng(rd());
-	uniform_int_distribution<int> rand(0,4);
+	uniform_int_distribution<int> rand(0, 4);
 
 	for (int i = 0; i < size; i++)
 	{
 		slots.push_back(*new Slot(bottomPosX, bottomPosY - 42.0f * (i + 1)));
-		slots.at(i).setGem(*new Gem(rand(eng), slots.at(i).getX(), slots.at(i).getY()));
+		gems.push_back(*new Gem(rand(eng), slots.at(i).getX(), slots.at(i).getY()));
+		slots.at(i).setGem(gems.at(i));
 	}
 }
 
 void Column::display(King::Engine& engine)
 {
-	for (int i = 0; i < slots.size(); i++)
+	for (int i = 0; i < gems.size() && &gems.at(i) != NULL; i++)
 	{
-		if (!slots.at(i).isEmpty())
-		{
-			slots.at(i).getGem().display(engine);
-		}
+			gems.at(i).display(engine);
+
+			if (gems.at(i).isMouseClicked(engine))
+			{
+				deleteGem(i);
+			}
+		
 	}
 }
 
 void Column::update(King::Engine& engine)
 {
-	if (slots.at(1).getGem().isMouseClicked(engine))
-	{
-		slots.at(1).deleteGem();
-	}
+
 }
 
-int Column::getSize() 
+int Column::getSize()
 {
-	return slots.size();
+	return gems.size();
 }
 
-string Column::toString() 
+
+void Column::deleteGem(int i)
 {
-	return "" + slots.max_size();
+	gems.erase(gems.begin() + i);
+	slots.at(i).deleteGem();
+}
+
+Gem Column::getGem(int i)
+{
+	return gems.at(i);
 }
 
 bool Column::isFull() {
-	
+
 	bool full = true;
 	for (int i = 0; i < SIZE; i++)
 	{
-		if (slots[i].isEmpty()) 
+		if (slots[i].isEmpty())
 		{
 			full = false;
 			break;
@@ -75,24 +83,26 @@ bool Column::isFull() {
 	return full;
 }
 
-void Column::slideDown() 
+void Column::slideDown()
 {
-	for (int i = 0; i < SIZE; i++)
+	
+	for (int i = 0; i < slots.size() - 1; i++)
 	{
-		if (slots[i].isEmpty()) 
+		if (slots.at(i).isEmpty())
 		{
-			if (!slots[i + 1].isEmpty())
+			if (!slots.at(i + 1).isEmpty())
 			{
-				slots[i + 1].getGem().fall();
+				gems.at(i + 1).fall();
 
-				if (slots[i + 1].getGem().getY() >= slots[i].getY()) 
+				if (gems.at(i + 1).getY() >= slots.at(i + 1).getY())
 				{
-					slots[i].setGem(*new Gem(slots[i + 1].getGem()));
-					slots[i + 1].deleteGem();
+					slots.at(i).setGem(gems.at(i + 1));
+					slots.at(i + 1).deleteGem();
 				}
 			}
 		}
 	}
+	
 }
 
 

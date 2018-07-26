@@ -10,6 +10,7 @@ class Column
 {
 protected:
 	static const int SIZE = 8;
+	vector<Gem> gems;
 	vector<Slot> slots;
 	float topPosX;
 	float topPosY;
@@ -28,6 +29,8 @@ public:
 	bool isFull();
 	int getSize();
 	string toString();
+	Gem getGem(int i);
+	void deleteGem(int i);
 
 
 };

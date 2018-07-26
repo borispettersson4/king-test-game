@@ -12,6 +12,7 @@ Gem::Gem(int type, float x, float y)
 	xPos = x;
 	yPos = y;
 	gemType = type;
+	falling = false;
 }
 
 void Gem::setGemType(int i)
@@ -93,8 +94,12 @@ void Gem::display(King::Engine& engine)
 
 void Gem::fall() 
 {
-	for(int i = 0; i < 10; i++)
-	yPos++;
+	for (int i = 0; i < 10; i++)
+	{
+		yPos++;
+		falling = true;
+	}
+	falling = false;
 }
 
 bool Gem::isMouseHovered(King::Engine& engine) 
@@ -107,4 +112,9 @@ bool Gem::isMouseHovered(King::Engine& engine)
 bool Gem::isMouseClicked(King::Engine& engine)
 {
 	return (engine.GetMouseButtonDown() && isMouseHovered(engine));
+}
+
+bool Gem::isFalling() 
+{
+	return falling;
 }

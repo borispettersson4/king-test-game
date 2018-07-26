@@ -1,6 +1,10 @@
-﻿  main.cpp
+﻿  Column.cpp
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\column.cpp(51): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\column.cpp(96): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\column.cpp(109): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\column.cpp(178): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  1 of 489 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  2 of 492 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

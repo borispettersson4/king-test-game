@@ -17,6 +17,7 @@ private:
 	float xScale;
 	float yScale;
 	int gemType;
+	bool falling;
 public:
 	Gem();
 	Gem(int type, float x, float y);
@@ -33,5 +34,6 @@ public:
 	void fall();
 	bool isMouseHovered(King::Engine& engine);
 	bool isMouseClicked(King::Engine& engine);
+	bool isFalling();
 };
 

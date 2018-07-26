@@ -33,6 +33,7 @@ public:
 	Gem getGem(int i);
 	void deleteGem(int i);
 	void spawnGem(int i);
+	void filterGems();
 
 };
 

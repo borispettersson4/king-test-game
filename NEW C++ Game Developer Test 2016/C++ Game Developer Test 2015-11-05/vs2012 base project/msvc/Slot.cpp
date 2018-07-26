@@ -58,5 +58,5 @@ void Slot::setGem(Gem g)
 
 void Slot::deleteGem() 
 {
-	currentGem = NULL;
+	currentGem = nullptr;
 }

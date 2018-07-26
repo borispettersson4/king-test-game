@@ -32,7 +32,7 @@ public:
 	string toString();
 	Gem getGem(int i);
 	void deleteGem(int i);
-
+	void spawnGem(int i);
 
 };
 

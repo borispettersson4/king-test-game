@@ -20,17 +20,22 @@ Column::Column(float bottomX, float bottomY, int size)
 
 }
 
-void Column::setSize(int size)
+void Column::spawnGem(int i) 
 {
 	random_device rd;
 	mt19937 eng(rd());
 	uniform_int_distribution<int> rand(0, 4);
 
+	gems.push_back(*new Gem(rand(eng), slots.at(i).getX(), slots.at(i).getY()));
+	slots.at(i).setGem(gems.at(i));
+}
+
+void Column::setSize(int size)
+{
 	for (int i = 0; i < size; i++)
 	{
 		slots.push_back(*new Slot(bottomPosX, bottomPosY - 42.0f * (i + 1)));
-		gems.push_back(*new Gem(rand(eng), slots.at(i).getX(), slots.at(i).getY()));
-		slots.at(i).setGem(gems.at(i));
+		spawnGem(i);
 	}
 }
 
@@ -45,13 +50,15 @@ void Column::display(King::Engine& engine)
 				canDelete = false;
 				deleteGem(i);
 			}
-		
 	}
 }
 
 void Column::update(King::Engine& engine)
 {
-
+	if (slots.at(7).isEmpty()) 
+	{
+		spawnGem(7);
+	}
 }
 
 int Column::getSize()
@@ -103,9 +110,10 @@ void Column::slideDown()
 				{
 					slots.at(i).setGem(gems.at(i));
 					slots.at(i + 1).deleteGem();
-					gems.at(i).setY(gems.at(i).getY() - 7.5f);
+					gems.at(i).setY(gems.at(i).getY() - 10.0f);
 					gems.at(i).setX(slots.at(i).getX());
 					canDelete = true;
+					printf("REMOVED A GEM \n");
 				}
 			}
 			catch (exception e)

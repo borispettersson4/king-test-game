@@ -105,11 +105,11 @@ void Column::slideDown()
 					slots.at(i + 1).deleteGem();
 					gems.at(i).setY(gems.at(i).getY() - 7.5f);
 					gems.at(i).setX(slots.at(i).getX());
+					canDelete = true;
 				}
 			}
 			catch (exception e)
 			{
-				canDelete = true;
 			}
 		}
 

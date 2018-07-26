@@ -103,12 +103,13 @@ void Column::slideDown()
 				{
 					slots.at(i).setGem(gems.at(i));
 					slots.at(i + 1).deleteGem();
-					gems.at(i).setY(slots.at(i).getY());
+					gems.at(i).setY(gems.at(i).getY() - 7.5f);
+					gems.at(i).setX(slots.at(i).getX());
 				}
 			}
 			catch (exception e)
 			{
-				//canDelete = true;
+				canDelete = true;
 			}
 		}
 

@@ -51,7 +51,7 @@ void Gem::setX(float x)
 
 void Gem::setY(float y)
 {
-	xPos = y;
+	yPos = y;
 }
 
 void Gem::display(King::Engine& engine)

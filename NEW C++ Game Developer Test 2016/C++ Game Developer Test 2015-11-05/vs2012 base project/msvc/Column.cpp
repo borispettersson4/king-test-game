@@ -43,6 +43,7 @@ void Column::setSize(int size)
 	{
 		slots.push_back(*new Slot(bottomPosX, bottomPosY - 42.0f * (i + 1)));
 		spawnGem(i);
+		printf("Gem in %d is type : %d \n", i, slots.at(i).getGem().getGemType());
 	}
 }
 
@@ -68,7 +69,9 @@ void Column::update(King::Engine& engine)
 		//canDelete = true;
 	}
 
+	slideDown();
 	filterGems();
+	display(engine);
 }
 
 int Column::getSize()
@@ -172,27 +175,25 @@ void Column::slideDown()
 
 void Column::filterGems() 
 {
-		for (int i = 0; i < gems.size() - 2 && &gems.at(i) != NULL; i++)
+	if (canDelete)
+		for (int i = 0; i < gems.size() - 2 && &gems.at(i + 1) != NULL; i++)
 		{
-			//if (&gems.at(i + 1) != NULL && !gems.at(i).isFalling())
-				if ((gems.at(i).getGemType() == gems.at(i + 1).getGemType()) && gems.at(i + 1).getGemType() == gems.at(i + 2).getGemType())
-				{
-					gems.at(i).markForDeletion();
-					gems.at(i + 1).markForDeletion();
-					gems.at(i + 2).markForDeletion();
-				}
+			if (gems.at(i).getGemType() == gems.at(i + 1).getGemType() && gems.at(i).getGemType() == gems.at(i + 2).getGemType())
+			{
+				canDelete = false;
+				gems.at(i).markForDeletion();
+				gems.at(i + 1).markForDeletion();
+				gems.at(i + 2).markForDeletion();
+			}
 		}
 
 		for (int i = 0; i < gems.size() && &gems.at(i) != NULL; i++)
 		{
-			if (gems.at(i).isMarkedForDeletion())
+			if (isFull())
 			{
-				if (isFull())
+				if (gems.at(i).isMarkedForDeletion())
 				{
-					try {
 						deleteGem(i);
-					}
-					catch (exception e) {}
 				}
 			}
 		}

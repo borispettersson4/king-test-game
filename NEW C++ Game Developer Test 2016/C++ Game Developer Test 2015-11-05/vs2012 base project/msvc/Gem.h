@@ -17,7 +17,9 @@ private:
 	float xScale;
 	float yScale;
 	int gemType;
+
 	bool falling;
+	bool selected;
 	bool isMarkedForDel;
 public:
 	Gem();
@@ -38,5 +40,7 @@ public:
 	bool isFalling();
 	void markForDeletion();
 	bool isMarkedForDeletion();
+	void select(bool s);
+	bool isSelected();
 };
 

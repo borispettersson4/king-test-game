@@ -34,6 +34,7 @@ public:
 	void deleteGem(int i);
 	void spawnGem(int i);
 	void filterGems();
+	void swapGems(Gem a, Gem b);
 
 };
 

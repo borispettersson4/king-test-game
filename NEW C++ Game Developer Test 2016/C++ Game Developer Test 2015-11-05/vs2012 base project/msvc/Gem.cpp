@@ -13,6 +13,7 @@ Gem::Gem(int type, float x, float y)
 	yPos = y;
 	gemType = type;
 	falling = false;
+	isMarkedForDel = false;
 }
 
 void Gem::setGemType(int i)
@@ -127,4 +128,14 @@ void Gem::markForDeletion()
 bool Gem::isMarkedForDeletion() 
 {
 	return isMarkedForDel;
+}
+
+bool Gem::isSelected() 
+{
+	return selected;
+}
+
+void Gem::select(bool s) 
+{
+	selected = s;
 }

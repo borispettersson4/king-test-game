@@ -36,8 +36,6 @@ public:
 		
 		//g.display(mEngine);
 		//h.display(mEngine);
-		col.display(mEngine);
-		col.slideDown();
 		col.update(mEngine);
 
 		//col.slideDown();

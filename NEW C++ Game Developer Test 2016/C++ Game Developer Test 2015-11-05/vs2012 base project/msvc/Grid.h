@@ -1,17 +1,23 @@
 #include <king/Engine.h>
 #include <king/Updater.h>
-#include "Gem.h"
+#include "Column.h"
 
 #pragma once
-class Grid : public King::Updater
+class Grid
 {
 private:
-
+	vector<Column> columns;
+	int xPos;
+	int yPos;
 public:
-
 	Grid();
-	virtual ~Grid();
-	Gem grid[];
+	Grid(float x, float y, int size);
+	virtual ~Grid(); 
+	void setSize(int size);
+	int getSize();
+	void update(King::Engine& engine);
+	void filterGems();
+
 
 };
 

@@ -2,8 +2,7 @@
 
 #include <king/Engine.h>
 #include <king/Updater.h>
-#include "c:\Users\Boris\Desktop\Development\king-test-game\NEW C++ Game Developer Test 2016\C++ Game Developer Test 2015-11-05\vs2012 base project\msvc\Gem.h"
-#include  "c:\Users\Boris\Desktop\Development\king-test-game\NEW C++ Game Developer Test 2016\C++ Game Developer Test 2015-11-05\vs2012 base project\msvc\Column.h"
+#include <c:\Users\Boris\Desktop\Development\king-test-game\NEW C++ Game Developer Test 2016\C++ Game Developer Test 2015-11-05\vs2012 base project\msvc\Grid.h>
 //**********************************************************************
 
 class CrushGame : public King::Updater {
@@ -14,8 +13,7 @@ private:
 	float mCurrentDiamondY;
 	//Gem g =  * new Gem(2, 100.0f, 100.0f);
 	//Gem h = *new Gem(4, 150.0f, 150.0f);
-	Column col = *new Column(325,440,8);
-	
+	Grid grid = *new Grid(330, 440, 8);
 
 public:
 
@@ -36,7 +34,7 @@ public:
 		
 		//g.display(mEngine);
 		//h.display(mEngine);
-		col.update(mEngine);
+		grid.update(mEngine);
 
 		//col.slideDown();
 		//g.fall();

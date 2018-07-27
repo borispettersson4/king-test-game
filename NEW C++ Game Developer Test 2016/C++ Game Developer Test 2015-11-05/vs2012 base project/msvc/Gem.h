@@ -2,8 +2,9 @@
 #ifndef GEM_H
 #define GEM_H
 
-#include <string>
 #include <king/Engine.h>
+#include <string>
+#include <chrono>
 
 #endif
 
@@ -18,9 +19,10 @@ private:
 	float yScale;
 	int gemType;
 
-	bool falling;
+	bool moving;
 	bool selected;
-	bool isMarkedForDel;
+	bool markedForDeletion;
+	bool visible;
 public:
 	Gem();
 	Gem(int type, float x, float y);
@@ -32,12 +34,16 @@ public:
 	void setGemType(int i);
 	void setX(float x);
 	void setY(float x);
-	void move(float x, float y);
 	void display(King::Engine& engine);
-	void fall();
+	void moveLeft();
+	void moveRight();
+	void moveUp();
+	void moveDown();
+	void playFlashingTexture();
+
 	bool isMouseHovered(King::Engine& engine);
 	bool isMouseClicked(King::Engine& engine);
-	bool isFalling();
+	bool isMoving();
 	void markForDeletion();
 	bool isMarkedForDeletion();
 	void select(bool s);

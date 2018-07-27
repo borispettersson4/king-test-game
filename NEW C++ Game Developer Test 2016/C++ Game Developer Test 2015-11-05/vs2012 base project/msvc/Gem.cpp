@@ -12,8 +12,11 @@ Gem::Gem(int type, float x, float y)
 	xPos = x;
 	yPos = y;
 	gemType = type;
-	falling = false;
-	isMarkedForDel = false;
+
+	markedForDeletion = false;
+	moving = false;
+	selected = false;
+	visible = true;
 }
 
 void Gem::setGemType(int i)
@@ -40,12 +43,6 @@ float Gem::getY()
 	return yPos;
 }
 
-void Gem::move(float x, float y)
-{
-	xPos = x - xScale/2;
-	yPos = y - yScale / 2;
-}
-
 void Gem::setX(float x) 
 {
 	xPos = x;
@@ -58,49 +55,102 @@ void Gem::setY(float y)
 
 void Gem::display(King::Engine& engine)
 {
-	switch (gemType)
+		switch (gemType)
+		{
+		case 0:
+			if(visible)
+			engine.Render(King::Engine::TEXTURE_BLUE, xPos, yPos);
+			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
+			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
+			break;
+
+		case 1:
+			if (visible)
+			engine.Render(King::Engine::TEXTURE_GREEN, xPos, yPos);
+			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
+			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
+			break;
+
+		case 2:
+			if (visible)
+			engine.Render(King::Engine::TEXTURE_PURPLE, xPos, yPos);
+			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
+			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
+			break;
+
+		case 3:
+			if (visible)
+			engine.Render(King::Engine::TEXTURE_RED, xPos, yPos);
+			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
+			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
+			break;
+
+		case 4:
+			if (visible)
+			engine.Render(King::Engine::TEXTURE_YELLOW, xPos, yPos);
+			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
+			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
+			break;
+		}
+
+	if(selected)
 	{
-	case 0:
-		engine.Render(King::Engine::TEXTURE_BLUE, xPos, yPos);
-		xScale = engine.GetTextureWidth(engine.TEXTURE_BLUE);
-		yScale = engine.GetTextureHeight(engine.TEXTURE_BLUE);
-		break;
-
-	case 1:
-		engine.Render(King::Engine::TEXTURE_GREEN, xPos, yPos);
-		xScale = engine.GetTextureWidth(engine.TEXTURE_GREEN);
-		yScale = engine.GetTextureHeight(engine.TEXTURE_GREEN);
-		break;
-
-	case 2:
-		engine.Render(King::Engine::TEXTURE_PURPLE, xPos, yPos);
-		xScale = engine.GetTextureWidth(engine.TEXTURE_PURPLE);
-		yScale = engine.GetTextureHeight(engine.TEXTURE_PURPLE);
-		break;
-
-	case 3:
-		engine.Render(King::Engine::TEXTURE_RED, xPos, yPos);
-		xScale = engine.GetTextureWidth(engine.TEXTURE_RED);
-		yScale = engine.GetTextureHeight(engine.TEXTURE_RED);
-		break;
-
-	case 4:
-		engine.Render(King::Engine::TEXTURE_YELLOW, xPos, yPos);
-		xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
-		yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
-		break;
+		playFlashingTexture();
 	}
+}
+
+void Gem::playFlashingTexture() 
+{
+	chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>
+	(
+		chrono::system_clock::now().time_since_epoch() / 250
+	);
+	
+	if(ms.count() %  2 == 0)
+		visible = false;
+		else
+		visible = true;
 
 }
 
-void Gem::fall() 
+void Gem::moveLeft()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		xPos--;
+		moving = true;
+	}
+	moving = false;
+}
+
+void Gem::moveRight()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		xPos++;
+		moving = true;
+	}
+	moving = false;
+}
+
+void Gem::moveUp()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		yPos--;
+		moving = true;
+	}
+	moving = false;
+}
+
+void Gem::moveDown() 
 {
 	for (int i = 0; i < 10; i++)
 	{
 		yPos++;
-		falling = true;
+		moving = true;
 	}
-	falling = false;
+	moving = false;
 }
 
 bool Gem::isMouseHovered(King::Engine& engine) 
@@ -115,19 +165,19 @@ bool Gem::isMouseClicked(King::Engine& engine)
 	return (engine.GetMouseButtonDown() && isMouseHovered(engine));
 }
 
-bool Gem::isFalling() 
+bool Gem::isMoving() 
 {
-	return falling;
+	return moving;
 }
 
 void Gem::markForDeletion() 
 {
-	isMarkedForDel = true;
+	markedForDeletion = true;
 }
 
 bool Gem::isMarkedForDeletion() 
 {
-	return isMarkedForDel;
+	return 	markedForDeletion;
 }
 
 bool Gem::isSelected() 

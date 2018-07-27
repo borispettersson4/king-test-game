@@ -67,8 +67,6 @@ void Column::update(King::Engine& engine)
 		spawnGem(7);
 		//canDelete = true;
 	}
-//	printf("Is Slot 7 Empty : %d \n", slots.at(7).isEmpty());
-
 
 	filterGems();
 }
@@ -174,22 +172,30 @@ void Column::slideDown()
 
 void Column::filterGems() 
 {
-
-		for (int i = 0; i < gems.size() - 1 && &gems.at(i) != NULL; i++)
+		for (int i = 0; i < gems.size() - 2 && &gems.at(i) != NULL; i++)
 		{
 			//if (&gems.at(i + 1) != NULL && !gems.at(i).isFalling())
-				if ((gems.at(i).getGemType() == gems.at(i + 1).getGemType()))
+				if ((gems.at(i).getGemType() == gems.at(i + 1).getGemType()) && gems.at(i + 1).getGemType() == gems.at(i + 2).getGemType())
 				{
-					canDelete = false;
-					if(!gems.at(i).isFalling())
-					deleteGem(i);
-					//deleteGem(i + 1);
+					gems.at(i).markForDeletion();
+					gems.at(i + 1).markForDeletion();
+					gems.at(i + 2).markForDeletion();
 				}
-				
-				printf("Is Slot 7 Empty : %d \n", i);
-
 		}
 
+		for (int i = 0; i < gems.size() && &gems.at(i) != NULL; i++)
+		{
+			if (gems.at(i).isMarkedForDeletion())
+			{
+				if (isFull())
+				{
+					try {
+						deleteGem(i);
+					}
+					catch (exception e) {}
+				}
+			}
+		}
 }
 
 

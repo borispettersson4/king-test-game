@@ -118,3 +118,13 @@ bool Gem::isFalling()
 {
 	return falling;
 }
+
+void Gem::markForDeletion() 
+{
+	isMarkedForDel = true;
+}
+
+bool Gem::isMarkedForDeletion() 
+{
+	return isMarkedForDel;
+}

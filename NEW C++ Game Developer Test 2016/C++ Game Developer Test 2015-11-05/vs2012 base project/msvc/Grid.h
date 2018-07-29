@@ -17,10 +17,11 @@ public:
 	void setSize(int size);
 	int getSize();
 	void update(King::Engine& engine);
-	void filterGems();
+	bool findMatchingGems();
 	void swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB);
 	void manageSelection(King::Engine& engine);
 	bool isFull();
+	bool isDeleting();
 
 
 };

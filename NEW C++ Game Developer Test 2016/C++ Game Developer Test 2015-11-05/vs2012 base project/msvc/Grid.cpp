@@ -39,14 +39,14 @@ void Grid::update(King::Engine& engine)
 	}
 	if (isFull())
 	{
+		findMatchingGems();
 		manageSelection(engine);
-		filterGems();
 	}
-
 }
 
-void Grid::filterGems() 
+bool Grid::findMatchingGems() 
 {
+	bool foundMatch = false;
 	for (int j = 0; j < columns.size(); j++)
 	{
 			for (int i = 0; i < columns.at(j).getGems().size() - 2 && &columns.at(j).getGems().at(i + 1) != NULL; i++)
@@ -58,6 +58,7 @@ void Grid::filterGems()
 					columns.at(j).markForDeletion(i);
 					columns.at(j).markForDeletion(i + 1);
 					columns.at(j).markForDeletion(i + 2);
+					foundMatch = true;
 				}
 			}
 			for (int i = 0; i < columns.at(j).getGems().size(); i++)
@@ -70,12 +71,12 @@ void Grid::filterGems()
 							columns.at(j).markForDeletion(i);
 							columns.at(j + 1).markForDeletion(i);
 							columns.at(j + 2).markForDeletion(i);
+							foundMatch = true;
 					}
 			}
-			
-		
 	}
 
+	return foundMatch;
 }
 
 void Grid::manageSelection(King::Engine& engine) 
@@ -128,6 +129,8 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 	gemB.markForSwap(true);
 	static int timesSwapped = 0;
 
+	printf("timesSwapped : %d \n",timesSwapped);
+
 			if (!slotA.isEmpty() && !slotB.isEmpty())
 			{
 					if (slotA.getX() < gemB.getX() && gemA.getX() < slotB.getX())
@@ -154,6 +157,8 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 					{
 						gemA.select(false);
 						gemB.select(false);
+						gemA.markForSwap(false);
+						gemB.markForSwap(false);
 
 						int tempGemType = gemA.getGemType();
 						gemA.setGemType(gemB.getGemType());
@@ -166,34 +171,36 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 
 						if (timesSwapped % 2 == 0)
 						{
-							timesSwapped++;
-							this_thread::sleep_for(chrono::milliseconds(100));
-							swap(slotB,slotA,gemB,gemA);
-							printf("1 \n");
+							if (!findMatchingGems())
+							{
+								timesSwapped++;
+								swap(slotB, slotA, gemB, gemA);
+							}
 						}
 						else
 						{
-							gemA.markForSwap(false);
-							gemB.markForSwap(false);
 							timesSwapped++;
-							printf("2 \n");
 						}
 					}
-					if (!gemA.isMarkedForSwap() && !gemA.isMarkedForSwap())
-					{
-						printf("3 \n");
-					}
 			}
-
 }
 
 bool Grid::isFull() 
 {
-	bool temp = true;
 	for (int i = 0; i < columns.size(); i++) 
 	{
 		if (!columns.at(i).isFull())
-			temp = false;
+			return false;
 	}
-	return temp;
+	return true;
+}
+
+bool Grid::isDeleting()
+{
+	for (int i = 0; i < columns.size(); i++)
+	{
+		if (columns.at(i).isDeleting())
+			return true;
+	}
+	return false;
 }

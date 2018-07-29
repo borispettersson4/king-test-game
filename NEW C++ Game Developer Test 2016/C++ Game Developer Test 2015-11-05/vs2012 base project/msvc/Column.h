@@ -34,6 +34,7 @@ public:
 	void slideDown();
 	void manageDeletedGems();
 	bool isFull();
+	bool isDeleting();
 	int getSize();
 	void deleteGem(int i);
 	void spawnGem(int i);

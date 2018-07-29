@@ -113,6 +113,18 @@ bool Column::isFull() {
 	return true;
 }
 
+bool Column::isDeleting() {
+
+	for (int i = 0; i < gems.size(); i++)
+	{
+		if (gems.at(i).isMarkedForDeletion())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Column::isDeleteReady() 
 {
 	return canDelete;

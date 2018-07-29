@@ -32,21 +32,22 @@ int Grid::getSize()
 
 void Grid::update(King::Engine& engine) 
 {
-	for (int i = 0; i < getSize(); i++) 
+	for (int i = 0; i < columns.size(); i++)
 	{
 		columns.at(i).update(engine);
-
-		if (columns.at(i).isFull())
-			filterGems();
 	}
+	if (isFull())
+	{
+		manageSelection(engine);
+		filterGems();
+	}
+
 }
 
 void Grid::filterGems() 
 {
 	for (int j = 0; j < columns.size(); j++)
 	{
-		if (columns.at(j).isDeleteReady())
-		{
 			for (int i = 0; i < columns.at(j).getGems().size() - 2 && &columns.at(j).getGems().at(i + 1) != NULL; i++)
 			{
 				if (columns.at(j).getGems().at(i).getGemType() == columns.at(j).getGems().at(i + 1).getGemType() &&
@@ -57,20 +58,121 @@ void Grid::filterGems()
 					columns.at(j).markForDeletion(i + 1);
 					columns.at(j).markForDeletion(i + 2);
 				}
-
-				if(j < columns.size() - 2)
-				if (columns.at(j).getGems().at(i).getGemType() == columns.at(j + 1).getGems().at(i).getGemType() &&
-					columns.at(j).getGems().at(i).getGemType() == columns.at(j + 2).getGems().at(i).getGemType())
-				{
-					if (columns.at(i).isFull() && columns.at(i + 1).isFull() && columns.at(i + 2).isFull())
+			}
+			for (int i = 0; i < columns.at(j).getGems().size(); i++)
+			{
+				if (j < columns.size() - 2 && isFull())
+					if (columns.at(j).getGems().at(i).getGemType() == columns.at(j + 1).getGems().at(i).getGemType() &&
+						columns.at(j).getGems().at(i).getGemType() == columns.at(j + 2).getGems().at(i).getGemType())
 					{
-						columns.at(j).markForDeletion(i);
-						columns.at(j + 1).markForDeletion(i);
-						columns.at(j + 2).markForDeletion(i);
+							columns.at(j).setDeleteStatus(false);
+							columns.at(j).markForDeletion(i);
+							columns.at(j + 1).markForDeletion(i);
+							columns.at(j + 2).markForDeletion(i);
 					}
+			}
+			
+		
+	}
+
+}
+
+void Grid::manageSelection(King::Engine& engine) 
+{
+	for (int i = 0; i < columns.size(); i++)
+	{
+		for (int j = 0; j < columns.at(i).getGems().size(); j++)
+		{
+			if (columns.at(i).getGem(j).isMouseClicked(engine) || columns.at(i).getGem(j).isMarkedForSwap())
+			{
+				if ((i == 0 || !columns.at(i - 1).getGem(j).isSelected()) && 
+					(i == columns.size() - 1 || !columns.at(i + 1).getGem(j).isSelected()) &&
+					(j == 0 || !columns.at(i).getGem(j - 1).isSelected()) &&
+					(j == columns.at(i).getGems().size() - 1 || !columns.at(i).getGem(j + 1).isSelected()))
+				{
+					columns.at(i).selectGem(j, true);
+				}
+
+				else if(i > 0 && columns.at(i - 1).getGem(j).isSelected())
+				{
+					swap(columns.at(i - 1).getSlot(j), columns.at(i).getSlot(j), 
+						 columns.at(i - 1).getGem(j), columns.at(i).getGem(j));
+				}
+
+				else if (i < columns.size() - 1 && columns.at(i + 1).getGem(j).isSelected())
+				{
+					swap(columns.at(i + 1).getSlot(j), columns.at(i).getSlot(j),
+						 columns.at(i + 1).getGem(j), columns.at(i).getGem(j));
+				}
+
+				else if (j > 0 && columns.at(i).getGem(j - 1).isSelected())
+				{
+					swap(columns.at(i).getSlot(j - 1), columns.at(i).getSlot(j),
+						 columns.at(i).getGem(j - 1), columns.at(i).getGem(j));
+				}
+
+				else if (j < columns.at(i).getGems().size() - 1 && columns.at(i).getGem(j + 1).isSelected())
+				{
+					swap(columns.at(i).getSlot(j + 1), columns.at(i).getSlot(j),
+						columns.at(i).getGem(j + 1), columns.at(i).getGem(j));
 				}
 			}
 		}
 	}
+}
 
+void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
+{
+	gemA.markForSwap(true);
+	gemB.markForSwap(true);
+
+			if (!slotA.isEmpty() && !slotB.isEmpty())
+			{
+					if (slotA.getX() < gemB.getX() && gemA.getX() < slotB.getX())
+					{
+						gemB.moveLeft(2);
+						gemA.moveRight(2);
+					}
+					else if (slotA.getX() > gemB.getX() && gemA.getX() > slotB.getX())
+					{
+						gemB.moveRight(2);
+						gemA.moveLeft(2);
+					}
+					else if (slotA.getY() < gemB.getY() && gemA.getY() < slotB.getY())
+					{
+						gemB.moveUp(2);
+						gemA.moveDown(2);
+					}
+					else if (slotA.getY() > gemB.getY() && gemA.getY() > slotB.getY())
+					{
+						gemB.moveDown(2);
+						gemA.moveUp(2);
+					}
+					else
+					{
+						gemA.markForSwap(false);
+						gemB.markForSwap(false);
+						gemA.select(false);
+						int tempGemType = gemA.getGemType();
+						gemA.setGemType(gemB.getGemType());
+						gemB.setGemType(tempGemType);
+						gemA.setX(slotA.getX());
+						gemA.setY(slotA.getY());
+						gemB.setX(slotB.getX());
+						gemB.setY(slotB.getY());
+					}
+			}
+
+
+}
+
+bool Grid::isFull() 
+{
+	bool temp = true;
+	for (int i = 0; i < columns.size(); i++) 
+	{
+		if (!columns.at(i).isFull())
+			temp = false;
+	}
+	return temp;
 }

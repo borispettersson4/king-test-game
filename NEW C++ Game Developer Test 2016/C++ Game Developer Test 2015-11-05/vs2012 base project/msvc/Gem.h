@@ -22,6 +22,7 @@ private:
 	bool moving;
 	bool selected;
 	bool markedForDeletion;
+	bool markedForSwap;
 	bool visible;
 public:
 	Gem();
@@ -35,17 +36,19 @@ public:
 	void setX(float x);
 	void setY(float x);
 	void display(King::Engine& engine);
-	void moveLeft();
-	void moveRight();
-	void moveUp();
-	void moveDown();
+	void moveLeft(int amount);
+	void moveRight(int amount);
+	void moveUp(int amount);
+	void moveDown(int amount);
 	void playFlashingTexture();
 
 	bool isMouseHovered(King::Engine& engine);
 	bool isMouseClicked(King::Engine& engine);
 	bool isMoving();
-	void markForDeletion();
+	void markForDeletion(bool status);
 	bool isMarkedForDeletion();
+	void markForSwap(bool status);
+	bool isMarkedForSwap();
 	void select(bool s);
 	bool isSelected();
 };

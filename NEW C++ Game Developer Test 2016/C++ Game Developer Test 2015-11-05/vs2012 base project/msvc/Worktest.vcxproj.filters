@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\kinglib">
-      <UniqueIdentifier>{71369e4a-8c3f-454a-bdba-5c82895475ea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\kinglib">
       <UniqueIdentifier>{6821ade4-45c6-4243-9e66-0f5cdb1a863b}</UniqueIdentifier>
     </Filter>
@@ -24,6 +21,9 @@
     </Filter>
     <Filter Include="Header Files\game_scripts">
       <UniqueIdentifier>{980c13e7-daca-488b-ab83-a13a3a19787f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kinglib">
+      <UniqueIdentifier>{71369e4a-8c3f-454a-bdba-5c82895475ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,9 @@ public:
 	int getSize();
 	void update(King::Engine& engine);
 	void filterGems();
+	void swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB);
+	void manageSelection(King::Engine& engine);
+	bool isFull();
 
 
 };

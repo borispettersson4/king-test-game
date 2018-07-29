@@ -20,12 +20,12 @@ Column::Column(float bottomX, float bottomY, int size)
 
 }
 
-vector<Gem> Column::getGems() 
+vector<Gem> & Column::getGems() 
 {
 	return gems;
 }
 
-vector<Slot> Column::getSlots()
+vector<Slot> & Column::getSlots()
 {
 	return slots;
 }
@@ -62,13 +62,6 @@ void Column::display(King::Engine& engine)
 	for (int i = 0; i < gems.size() && &gems.at(i) != NULL; i++)
 	{
 			gems.at(i).display(engine);
-
-			if (gems.at(i).isMouseClicked(engine) && canDelete)
-			{
-				canDelete = false;
-				gems.at(i).markForDeletion();
-				//gems.at(i).select(true);
-			}
 	}
 }
 
@@ -91,7 +84,6 @@ int Column::getSize()
 	return gems.size();
 }
 
-
 void Column::deleteGem(int i)
 {
 	if(&gems.at(i) != NULL)
@@ -99,9 +91,14 @@ void Column::deleteGem(int i)
 	slots.at(i).deleteGem();
 }
 
-Gem Column::getGem(int i)
+Gem & Column::getGem(int i)
 {
 	return gems.at(i);
+}
+
+Slot & Column::getSlot(int i)
+{
+	return slots.at(i);
 }
 
 bool Column::isFull() {
@@ -128,7 +125,7 @@ void Column::slideDown()
 		spawnGem(slots.size() - 1);
 	}
 	
-	for (int i = 0; i < slots.size() - 1; i++)
+	for (int i = 0; i < slots.size(); i++)
 	{
 		if (slots.at(i).isEmpty())
 		{
@@ -136,54 +133,20 @@ void Column::slideDown()
 				{
 					if (gems.at(i).getY() < slots.at(i).getY() + 5.0f)
 					{
-						gems.at(i).moveDown();
+						gems.at(i).moveDown(10);
 					}
 					else
 					{
 						slots.at(i).setGem(gems.at(i));
 						slots.at(i + 1).deleteGem();
-						gems.at(i).setY(gems.at(i).getY() - 10.0f);
+						gems.at(i).setY(slots.at(i).getY());
 						gems.at(i).setX(slots.at(i).getX());
 						canDelete = true;
-						//printf("REMOVED A GEM \n");
-					}
-				}
-				else if (!slots.at(i + 2).isEmpty())
-				{
-					if (gems.at(i).getY() < slots.at(i).getY() + 5.0f)
-					{
-						gems.at(i).moveDown();
-					}
-					else
-					{
-						slots.at(i).setGem(gems.at(i));
-						slots.at(i + 2).deleteGem();
-						gems.at(i).setY(gems.at(i).getY() - 10.0f);
-						gems.at(i).setX(slots.at(i).getX());
-						canDelete = true;
-						//printf("REMOVED A GEM \n");
-					}
-				}
-
-				else if (!slots.at(i + 3).isEmpty())
-				{
-					if (gems.at(i).getY() < slots.at(i).getY() + 5.0f)
-					{
-						gems.at(i).moveDown();
-					}
-					else
-					{
-						slots.at(i).setGem(gems.at(i));
-						slots.at(i + 3).deleteGem();
-						gems.at(i).setY(gems.at(i).getY() - 10.0f);
-						gems.at(i).setX(slots.at(i).getX());
-						canDelete = true;
-						//printf("REMOVED A GEM \n");
+						break;
 					}
 				}
 			}
 		}
-
 }
 
 void Column::manageDeletedGems() 
@@ -192,7 +155,6 @@ void Column::manageDeletedGems()
 	{
 		if (isFull())
 		{
-			printf("Marked Status : %d \n", gems.at(i).isMarkedForDeletion());
 			if (gems.at(i).isMarkedForDeletion())
 			{
 				deleteGem(i);
@@ -208,7 +170,17 @@ void Column::setDeleteStatus(bool status)
 
 void Column::markForDeletion(int i) 
 {
-	gems.at(i).markForDeletion();
+	gems.at(i).markForDeletion(true);
+}
+
+void Column::selectGem(int i, bool status) 
+{
+	gems.at(i).select(status);
+}
+
+bool Column::isMouseClicked(int i, King::Engine& engine) 
+{
+	return getSlot(i).isMouseClicked(engine);
 }
 
 

@@ -38,25 +38,36 @@ void Slot::setY(float y)
 
 bool Slot::isEmpty() 
 {
-	return currentGem == NULL;
+	return currentGemPtr == NULL;
 }
 
-Gem Slot::getGem() 
-{
-	return *currentGem;
-}
-
-Gem* Slot::getGemPointer()
+Gem & Slot::getGem() 
 {
 	return currentGem;
 }
 
-void Slot::setGem(Gem g) 
+Gem* Slot::getGemPointer()
 {
-	currentGem = &g;
+	return currentGemPtr;
+}
+
+void Slot::setGem(Gem &g) 
+{
+	currentGem = g;
+	currentGemPtr = &currentGem;
 }
 
 void Slot::deleteGem() 
 {
-	currentGem = nullptr;
+	currentGemPtr = nullptr;
+}
+
+void Slot::selectGem(bool status) 
+{
+	getGem().select(status);
+}
+
+bool Slot::isMouseClicked(King::Engine& engine)
+{
+	return getGem().isMouseClicked(engine);
 }

@@ -2,12 +2,19 @@
 c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(46): warning C4018: '<': signed/unsigned mismatch
-c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(50): warning C4018: '<': signed/unsigned mismatch
-c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(61): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(35): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(49): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(51): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(62): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(82): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(84): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(102): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(114): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\c++ game developer test 2015-11-05\vs2012 base project\msvc\grid.cpp(172): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  2 of 592 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  3 of 603 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Worktest.vcxproj -> C:\Users\Boris\Desktop\Development\king-test-game\NEW C++ Game Developer Test 2016\C++ Game Developer Test 2015-11-05\vs2012 base project\bin\Worktest.exe

@@ -5,6 +5,12 @@ Gem::Gem()
 	xPos = 0;
 	yPos = 0;
 	gemType = 0;
+
+	markedForDeletion = false;
+	markedForSwap = false;
+	moving = false;
+	selected = false;
+	visible = true;
 }
 
 Gem::Gem(int type, float x, float y)
@@ -14,6 +20,7 @@ Gem::Gem(int type, float x, float y)
 	gemType = type;
 
 	markedForDeletion = false;
+	markedForSwap = false;
 	moving = false;
 	selected = false;
 	visible = true;
@@ -60,42 +67,39 @@ void Gem::display(King::Engine& engine)
 		case 0:
 			if(visible)
 			engine.Render(King::Engine::TEXTURE_BLUE, xPos, yPos);
-			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
-			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
 			break;
 
 		case 1:
 			if (visible)
 			engine.Render(King::Engine::TEXTURE_GREEN, xPos, yPos);
-			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
-			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
 			break;
 
 		case 2:
 			if (visible)
 			engine.Render(King::Engine::TEXTURE_PURPLE, xPos, yPos);
-			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
-			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
 			break;
 
 		case 3:
 			if (visible)
 			engine.Render(King::Engine::TEXTURE_RED, xPos, yPos);
-			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
-			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
 			break;
 
 		case 4:
 			if (visible)
 			engine.Render(King::Engine::TEXTURE_YELLOW, xPos, yPos);
-			xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
-			yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
 			break;
 		}
+
+		xScale = engine.GetTextureWidth(engine.TEXTURE_YELLOW);
+		yScale = engine.GetTextureHeight(engine.TEXTURE_YELLOW);
 
 	if(selected)
 	{
 		playFlashingTexture();
+	}
+	else
+	{
+		visible = true;
 	}
 }
 
@@ -103,7 +107,7 @@ void Gem::playFlashingTexture()
 {
 	chrono::milliseconds ms = chrono::duration_cast<chrono::milliseconds>
 	(
-		chrono::system_clock::now().time_since_epoch() / 250
+		chrono::system_clock::now().time_since_epoch() / 200
 	);
 	
 	if(ms.count() %  2 == 0)
@@ -113,9 +117,9 @@ void Gem::playFlashingTexture()
 
 }
 
-void Gem::moveLeft()
+void Gem::moveLeft(int amount)
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < amount; i++)
 	{
 		xPos--;
 		moving = true;
@@ -123,9 +127,9 @@ void Gem::moveLeft()
 	moving = false;
 }
 
-void Gem::moveRight()
+void Gem::moveRight(int amount)
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < amount; i++)
 	{
 		xPos++;
 		moving = true;
@@ -133,9 +137,9 @@ void Gem::moveRight()
 	moving = false;
 }
 
-void Gem::moveUp()
+void Gem::moveUp(int amount)
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < amount; i++)
 	{
 		yPos--;
 		moving = true;
@@ -143,9 +147,9 @@ void Gem::moveUp()
 	moving = false;
 }
 
-void Gem::moveDown() 
+void Gem::moveDown(int amount)
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < amount; i++)
 	{
 		yPos++;
 		moving = true;
@@ -170,14 +174,24 @@ bool Gem::isMoving()
 	return moving;
 }
 
-void Gem::markForDeletion() 
+void Gem::markForDeletion(bool status) 
 {
-	markedForDeletion = true;
+	markedForDeletion = status;
 }
 
 bool Gem::isMarkedForDeletion() 
 {
 	return 	markedForDeletion;
+}
+
+void Gem::markForSwap(bool status)
+{
+	markedForSwap = status;
+}
+
+bool Gem::isMarkedForSwap()
+{
+	return 	markedForSwap;
 }
 
 bool Gem::isSelected() 

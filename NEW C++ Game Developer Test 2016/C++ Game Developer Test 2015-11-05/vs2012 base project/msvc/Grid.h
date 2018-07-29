@@ -1,5 +1,6 @@
 #include <king/Engine.h>
 #include <king/Updater.h>
+#include <thread>
 #include "Column.h"
 
 #pragma once

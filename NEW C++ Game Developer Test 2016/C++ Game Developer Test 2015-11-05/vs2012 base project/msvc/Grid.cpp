@@ -2,8 +2,10 @@
 
 Grid::Grid()
 {
+	xPos = 0;
+	yPos = 0;
+	setSize(0);
 }
-
 
 Grid::~Grid()
 {
@@ -13,7 +15,6 @@ Grid::Grid(float x, float y, int size)
 {
 	xPos = x;
 	yPos = y;
-
 	setSize(size);
 }
 
@@ -125,6 +126,7 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 {
 	gemA.markForSwap(true);
 	gemB.markForSwap(true);
+	static int timesSwapped = 0;
 
 			if (!slotA.isEmpty() && !slotB.isEmpty())
 			{
@@ -150,18 +152,39 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 					}
 					else
 					{
-						gemA.markForSwap(false);
-						gemB.markForSwap(false);
 						gemA.select(false);
+						gemB.select(false);
+
 						int tempGemType = gemA.getGemType();
 						gemA.setGemType(gemB.getGemType());
 						gemB.setGemType(tempGemType);
+
 						gemA.setX(slotA.getX());
 						gemA.setY(slotA.getY());
 						gemB.setX(slotB.getX());
 						gemB.setY(slotB.getY());
+
+						if (timesSwapped % 2 == 0)
+						{
+							timesSwapped++;
+							this_thread::sleep_for(chrono::milliseconds(100));
+							swap(slotB,slotA,gemB,gemA);
+							printf("1 \n");
+						}
+						else
+						{
+							gemA.markForSwap(false);
+							gemB.markForSwap(false);
+							timesSwapped++;
+							printf("2 \n");
+						}
+					}
+					if (!gemA.isMarkedForSwap() && !gemA.isMarkedForSwap())
+					{
+						printf("3 \n");
 					}
 			}
+
 }
 
 bool Grid::isFull() 

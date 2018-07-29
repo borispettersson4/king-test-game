@@ -162,8 +162,6 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 						gemB.setY(slotB.getY());
 					}
 			}
-
-
 }
 
 bool Grid::isFull() 

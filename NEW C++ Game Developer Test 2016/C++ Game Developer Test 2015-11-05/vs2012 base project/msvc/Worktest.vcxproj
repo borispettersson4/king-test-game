@@ -83,6 +83,7 @@
     <ClCompile Include="..\external\include\king\SdlSurface.cpp" />
     <ClCompile Include="..\external\include\king\SdlWindow.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Column.cpp" />
     <ClCompile Include="Gem.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="..\external\include\king\SdlSurface.h" />
     <ClInclude Include="..\external\include\king\SdlWindow.h" />
     <ClInclude Include="..\external\include\king\Updater.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Column.h" />
     <ClInclude Include="Gem.h" />
     <ClInclude Include="Grid.h" />

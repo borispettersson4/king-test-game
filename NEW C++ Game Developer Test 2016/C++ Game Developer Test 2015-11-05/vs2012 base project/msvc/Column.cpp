@@ -2,7 +2,12 @@
 
 Column::Column()
 {
+	bottomXPos = 0;
+	bottomYPos = 0;
 
+	setSize(0);
+	canDelete = true;
+	speed = 1;
 }
 
 Column::~Column()
@@ -15,9 +20,8 @@ Column::Column(float bottomX, float bottomY, int size)
 	bottomYPos = bottomY;
 
 	setSize(size);
-
 	canDelete = true;
-
+	speed = 1;
 }
 
 vector<Gem> & Column::getGems() 
@@ -57,6 +61,11 @@ void Column::setSize(int size)
 	}
 }
 
+void Column::setSpeed(float s) 
+{
+	speed = s;
+}
+
 void Column::display(King::Engine& engine)
 {
 	for (int i = 0; i < gems.size() && &gems.at(i) != NULL; i++)
@@ -75,8 +84,11 @@ void Column::update(King::Engine& engine)
 	{
 		slideDown();
 	}
-	display(engine);
+}
 
+float Column::getSpeed() 
+{
+	return speed;
 }
 
 int Column::getSize()
@@ -145,7 +157,7 @@ void Column::slideDown()
 				{
 					if (gems.at(i).getY() < slots.at(i).getY() + 5.0f)
 					{
-						gems.at(i).moveDown(10);
+						gems.at(i).moveDown(10*speed);
 					}
 					else
 					{

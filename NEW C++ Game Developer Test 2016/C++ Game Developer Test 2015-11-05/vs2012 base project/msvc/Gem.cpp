@@ -50,6 +50,16 @@ float Gem::getY()
 	return yPos;
 }
 
+float Gem::getXScale()
+{
+	return xScale;
+}
+
+float Gem::getYScale()
+{
+	return yScale;
+}
+
 void Gem::setX(float x) 
 {
 	xPos = x;

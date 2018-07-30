@@ -18,12 +18,40 @@ Grid::Grid(float x, float y, int size)
 	setSize(size);
 }
 
+void Grid::setX(float x) 
+{
+	xPos = x;
+}
+
+void Grid::setY(float y)
+{
+	yPos = y;
+}
+
 void Grid::setSize(int size)
 {
 	for (int i = 0; i < size; i++)
 	{
 		columns.push_back(*new Column(xPos + 42*(i), yPos, size));
 	}
+}
+
+void Grid::setSpeed(float s) 
+{
+	for (int i = 0; i < columns.size(); i++)
+	{
+		columns.at(i).setSpeed(s);
+	}
+}
+
+void Grid::setScore(int s)
+{
+	score = s;
+}
+
+int Grid::getScore() 
+{
+	return score;
 }
 
 int Grid::getSize() 
@@ -36,6 +64,7 @@ void Grid::update(King::Engine& engine)
 	for (int i = 0; i < columns.size(); i++)
 	{
 		columns.at(i).update(engine);
+		updateScore();
 	}
 	if (isFull())
 	{
@@ -44,42 +73,15 @@ void Grid::update(King::Engine& engine)
 	}
 }
 
-bool Grid::findMatchingGems() 
+void Grid::display(King::Engine &engine) 
 {
-	bool foundMatch = false;
-	for (int j = 0; j < columns.size(); j++)
+	for (int i = 0; i < columns.size(); i++)
 	{
-			for (int i = 0; i < columns.at(j).getGems().size() - 2 && &columns.at(j).getGems().at(i + 1) != NULL; i++)
-			{
-				if (columns.at(j).getGems().at(i).getGemType() == columns.at(j).getGems().at(i + 1).getGemType() &&
-					columns.at(j).getGems().at(i).getGemType() == columns.at(j).getGems().at(i + 2).getGemType())
-				{
-					columns.at(j).setDeleteStatus(false);
-					columns.at(j).markForDeletion(i);
-					columns.at(j).markForDeletion(i + 1);
-					columns.at(j).markForDeletion(i + 2);
-					foundMatch = true;
-				}
-			}
-			for (int i = 0; i < columns.at(j).getGems().size(); i++)
-			{
-				if (j < columns.size() - 2 && isFull())
-					if (columns.at(j).getGems().at(i).getGemType() == columns.at(j + 1).getGems().at(i).getGemType() &&
-						columns.at(j).getGems().at(i).getGemType() == columns.at(j + 2).getGems().at(i).getGemType())
-					{
-							columns.at(j).setDeleteStatus(false);
-							columns.at(j).markForDeletion(i);
-							columns.at(j + 1).markForDeletion(i);
-							columns.at(j + 2).markForDeletion(i);
-							foundMatch = true;
-					}
-			}
+		columns.at(i).display(engine);
 	}
-
-	return foundMatch;
 }
 
-void Grid::manageSelection(King::Engine& engine) 
+void Grid::manageSelection(King::Engine& engine)
 {
 	for (int i = 0; i < columns.size(); i++)
 	{
@@ -87,7 +89,7 @@ void Grid::manageSelection(King::Engine& engine)
 		{
 			if (columns.at(i).getGem(j).isMouseClicked(engine) || columns.at(i).getGem(j).isMarkedForSwap())
 			{
-				if ((i == 0 || !columns.at(i - 1).getGem(j).isSelected()) && 
+				if ((i == 0 || !columns.at(i - 1).getGem(j).isSelected()) &&
 					(i == columns.size() - 1 || !columns.at(i + 1).getGem(j).isSelected()) &&
 					(j == 0 || !columns.at(i).getGem(j - 1).isSelected()) &&
 					(j == columns.at(i).getGems().size() - 1 || !columns.at(i).getGem(j + 1).isSelected()))
@@ -95,22 +97,22 @@ void Grid::manageSelection(King::Engine& engine)
 					columns.at(i).selectGem(j, true);
 				}
 
-				else if(i > 0 && columns.at(i - 1).getGem(j).isSelected())
+				else if (i > 0 && columns.at(i - 1).getGem(j).isSelected())
 				{
-					swap(columns.at(i - 1).getSlot(j), columns.at(i).getSlot(j), 
-						 columns.at(i - 1).getGem(j), columns.at(i).getGem(j));
+					swap(columns.at(i - 1).getSlot(j), columns.at(i).getSlot(j),
+						columns.at(i - 1).getGem(j), columns.at(i).getGem(j));
 				}
 
 				else if (i < columns.size() - 1 && columns.at(i + 1).getGem(j).isSelected())
 				{
 					swap(columns.at(i + 1).getSlot(j), columns.at(i).getSlot(j),
-						 columns.at(i + 1).getGem(j), columns.at(i).getGem(j));
+						columns.at(i + 1).getGem(j), columns.at(i).getGem(j));
 				}
 
 				else if (j > 0 && columns.at(i).getGem(j - 1).isSelected())
 				{
 					swap(columns.at(i).getSlot(j - 1), columns.at(i).getSlot(j),
-						 columns.at(i).getGem(j - 1), columns.at(i).getGem(j));
+						columns.at(i).getGem(j - 1), columns.at(i).getGem(j));
 				}
 
 				else if (j < columns.at(i).getGems().size() - 1 && columns.at(i).getGem(j + 1).isSelected())
@@ -128,8 +130,6 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 	gemA.markForSwap(true);
 	gemB.markForSwap(true);
 	static int timesSwapped = 0;
-
-	printf("timesSwapped : %d \n",timesSwapped);
 
 			if (!slotA.isEmpty() && !slotB.isEmpty())
 			{
@@ -183,6 +183,55 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 						}
 					}
 			}
+}
+
+void Grid::updateScore() 
+{
+	for (int i = 0; i < columns.size(); i++)
+	{
+		for (int j = 0; j < columns.at(i).getGems().size(); j++)
+		{
+			if (columns.at(i).getGem(j).isMarkedForDeletion()) 
+			{
+				score++;
+			}
+		}
+	}
+}
+
+bool Grid::findMatchingGems()
+{
+	bool foundMatch = false;
+	for (int j = 0; j < columns.size(); j++)
+	{
+		for (int i = 0; i < columns.at(j).getGems().size() - 2 && &columns.at(j).getGems().at(i + 1) != NULL; i++)
+		{
+			if (columns.at(j).getGems().at(i).getGemType() == columns.at(j).getGems().at(i + 1).getGemType() &&
+				columns.at(j).getGems().at(i).getGemType() == columns.at(j).getGems().at(i + 2).getGemType())
+			{
+				columns.at(j).setDeleteStatus(false);
+				columns.at(j).markForDeletion(i);
+				columns.at(j).markForDeletion(i + 1);
+				columns.at(j).markForDeletion(i + 2);
+				foundMatch = true;
+			}
+		}
+		for (int i = 0; i < columns.at(j).getGems().size(); i++)
+		{
+			if (j < columns.size() - 2 && isFull())
+				if (columns.at(j).getGems().at(i).getGemType() == columns.at(j + 1).getGems().at(i).getGemType() &&
+					columns.at(j).getGems().at(i).getGemType() == columns.at(j + 2).getGems().at(i).getGemType())
+				{
+					columns.at(j).setDeleteStatus(false);
+					columns.at(j).markForDeletion(i);
+					columns.at(j + 1).markForDeletion(i);
+					columns.at(j + 2).markForDeletion(i);
+					foundMatch = true;
+				}
+		}
+	}
+
+	return foundMatch;
 }
 
 bool Grid::isFull() 

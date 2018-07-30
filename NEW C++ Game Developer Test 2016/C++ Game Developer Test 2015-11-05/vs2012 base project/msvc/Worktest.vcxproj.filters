@@ -25,6 +25,12 @@
     <Filter Include="Source Files\kinglib">
       <UniqueIdentifier>{71369e4a-8c3f-454a-bdba-5c82895475ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\other_scripts">
+      <UniqueIdentifier>{fc172fee-dccd-47ae-bdfa-6db49eee45af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\other_scripts">
+      <UniqueIdentifier>{f162949b-bf52-41a6-b89e-a785707ec679}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -60,6 +66,9 @@
     <ClCompile Include="Slot.cpp">
       <Filter>Source Files\game_scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\other_scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\external\include\king\Engine.h">
@@ -94,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Slot.h">
       <Filter>Header Files\game_scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\other_scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

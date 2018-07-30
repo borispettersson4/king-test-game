@@ -16,7 +16,7 @@ protected:
 	float topYPos;
 	float bottomXPos;
 	float bottomYPos;
-	float yScale;
+	float speed;
 	bool canDelete;
 
 public:
@@ -28,20 +28,25 @@ public:
 	vector<Slot> & getSlots();
 	Gem & getGem(int i);
 	Slot & getSlot(int i);
+
 	void setSize(int size);
 	void display(King::Engine& engine);
 	void update(King::Engine& engine);
 	void slideDown();
 	void manageDeletedGems();
-	bool isFull();
-	bool isDeleting();
-	int getSize();
 	void deleteGem(int i);
 	void spawnGem(int i);
-	bool isDeleteReady();
 	void setDeleteStatus(bool status);
 	void markForDeletion(int i);
 	void selectGem(int i, bool status);
+	void setSpeed(float s);
+
+	float getSpeed();
+	int getSize();
+
+	bool isDeleteReady();
+	bool isFull();
+	bool isDeleting();
 	bool isMouseClicked(int i, King::Engine& engine);
 
 

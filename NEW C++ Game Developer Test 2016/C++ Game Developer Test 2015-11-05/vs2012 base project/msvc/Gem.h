@@ -29,9 +29,12 @@ public:
 	Gem(int type, float x, float y);
 	virtual ~Gem();
 
+	float getXScale();
+	float getYScale();
 	float getX();
 	float getY();
 	int getGemType();
+
 	void setGemType(int i);
 	void setX(float x);
 	void setY(float x);
@@ -41,15 +44,16 @@ public:
 	void moveUp(int amount);
 	void moveDown(int amount);
 	void playFlashingTexture();
+	void markForDeletion(bool status);
+	void markForSwap(bool status);
+	void select(bool s);
 
 	bool isMouseHovered(King::Engine& engine);
 	bool isMouseClicked(King::Engine& engine);
 	bool isMoving();
-	void markForDeletion(bool status);
-	bool isMarkedForDeletion();
-	void markForSwap(bool status);
-	bool isMarkedForSwap();
-	void select(bool s);
 	bool isSelected();
+	bool isMarkedForSwap();
+	bool isMarkedForDeletion();
+
 };
 

@@ -57,7 +57,6 @@ void Column::setSize(int size)
 	{
 		slots.push_back(*new Slot(bottomXPos, bottomYPos - 42.0f * (i + 1)));
 		spawnGem(i);
-		//printf("Gem in %d is type : %d \n", i, slots.at(i).getGem().getGemType());
 	}
 }
 

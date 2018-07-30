@@ -66,14 +66,13 @@ public:
 		string timeString = to_string(time);
 		const char * timeChar = timeString.c_str();
 
+		string scoreString = to_string(grid.getScore());
+		const char * scoreChar = scoreString.c_str();
+
 		mEngine.Render(King::Engine::TEXTURE_BACKGROUND, 0.0f, 0.0f);
 		grid.update(mEngine);
 		grid.display(mEngine);
 		mEngine.Write(timeChar, 100, 450, 0);
-
-		string scoreString = to_string(grid.getScore());
-		const char * scoreChar = scoreString.c_str();
-
 		mEngine.Write("SCORE", 90, 100, 0);
 		mEngine.Write(scoreChar, 90, 140, 0);
 
@@ -90,16 +89,15 @@ public:
 			chrono::system_clock::now().time_since_epoch() / 300
 		);
 
-		if (ms.count() % 2 != 0)
-			mEngine.Write("click to restart game", 255, 500, 0);
-
-		mEngine.Write("GAME OVER", 305, 150, 0);
-
 		string scoreString = to_string(grid.getScore());
 		const char * scoreChar = scoreString.c_str();
 
+		mEngine.Write("GAME OVER", 305, 150, 0);
 		mEngine.Write("Your Score :", 250, 250, 0);
 		mEngine.Write(scoreChar, 450, 250, 0);
+
+		if (ms.count() % 2 != 0)
+			mEngine.Write("click to restart game", 255, 500, 0);
 
 		if (mEngine.GetMouseButtonDown())
 		{

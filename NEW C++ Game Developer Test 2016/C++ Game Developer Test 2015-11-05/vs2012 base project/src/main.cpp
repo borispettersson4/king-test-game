@@ -3,9 +3,10 @@
 #include <king/Engine.h>
 #include <king/Updater.h>
 #include "..\msvc\Grid.h"
+#include <fstream>
 
 int gameScreen = 0;
-int bestScore;
+int highScore = 0;
 
 //**********************************************************************
 
@@ -14,7 +15,7 @@ private:
 	King::Engine mEngine;
 	Grid grid;
 	clock_t startTime;
-	int timeLimit = 60;
+	int timeLimit = 1;
 
 public:
 	CrushMiner()
@@ -23,7 +24,6 @@ public:
 
 	void Start()
 	{
-
 		grid = *new Grid(330, 440, 8);
 		mEngine.Start(*this);
 	}
@@ -34,15 +34,15 @@ public:
 		{
 		case 0:
 			playIntro();
-			break;
+		break;
 
 		case 1:
 			playGame();
-			break;
+		break;
 
 		case 2:
 			playOutro();
-			break;
+		break;
 		}
 	}
 
@@ -98,6 +98,11 @@ public:
 		if (time <= 0) 
 		{
 			gameScreen = 2;
+
+			if (grid.getScore() > highScore)
+			{
+				highScore = grid.getScore();
+			}
 		}
 	}
 
@@ -107,29 +112,33 @@ public:
 		(
 			chrono::system_clock::now().time_since_epoch() / 300
 		);
+		chrono::seconds sec = chrono::duration_cast<chrono::seconds>
+		(
+			chrono::system_clock::now().time_since_epoch()
+		);
 
 		string scoreString = to_string(grid.getScore());
 		const char * scoreChar = scoreString.c_str();
-		
-		string bestScoreString = to_string(grid.getScore());
+
+		string bestScoreString = to_string(highScore);
 		const char * bestScoreChar = bestScoreString.c_str();
 
-		if (grid.getScore() > bestScore)
-			bestScore = grid.getScore();
-
-		mEngine.Write("GAME OVER", 305, 150, 0);
+		mEngine.Write("GAME OVER", 290, 150, 0);
 		mEngine.Write("Your Score :", 250, 250, 0);
-		mEngine.Write(scoreChar, 450, 250, 0);
-		mEngine.Write("Your Best :", 250, 350, 0);
-		mEngine.Write(bestScoreChar, 450, 350, 0);
+		mEngine.Write(scoreChar, 475, 250, 0);
+		mEngine.Write("Your Best :", 260, 350, 0);
+		mEngine.Write(bestScoreChar, 475, 350, 0);
 
-		if (ms.count() % 2 != 0)
-			mEngine.Write("click to restart game", 255, 500, 0);
-
-		if (mEngine.GetMouseButtonDown())
+		if (ms.count() > 3)
 		{
-			gameScreen = 0;
-			grid = *new Grid(330, 440, 8);
+			if (ms.count() % 2 != 0)
+				mEngine.Write("click to restart game", 240, 500, 0);
+
+			if (mEngine.GetMouseButtonDown())
+			{
+				gameScreen = 0;
+				grid = *new Grid(330, 440, 8);
+			}
 		}
 	}
 };

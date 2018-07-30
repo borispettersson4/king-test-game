@@ -5,7 +5,7 @@
 #include "..\msvc\Grid.h"
 
 int gameScreen = 0;
-int bestScore = 0;
+int bestScore;
 
 //**********************************************************************
 

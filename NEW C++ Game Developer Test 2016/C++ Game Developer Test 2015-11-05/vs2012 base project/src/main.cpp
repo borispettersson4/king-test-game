@@ -3,7 +3,6 @@
 #include <king/Engine.h>
 #include <king/Updater.h>
 #include "..\msvc\Grid.h"
-#include <fstream>
 
 int gameScreen = 0;
 int highScore = 0;
@@ -14,8 +13,12 @@ class CrushMiner : public King::Updater {
 private:
 	King::Engine mEngine;
 	Grid grid;
-	clock_t startTime;
-	int timeLimit = 1;
+
+	clock_t gameTimer;
+	clock_t exitTimer;
+
+	int gametimeLimit = 60;
+	int retrytimeLimit = 2;
 
 public:
 	CrushMiner()
@@ -69,7 +72,7 @@ public:
 			{
 				gameScreen = 1;
 				grid.setSpeed(1);
-				startTime = clock();
+				gameTimer = clock();
 				grid.setScore(0);
 			}
 		}
@@ -77,11 +80,12 @@ public:
 		{
 			mEngine.Write("loading...", 430, 300, 0);
 		}
+
 	}
 
 	void playGame() 
 	{	
-		int time = timeLimit - (clock() - startTime) / 1000;
+		int time = gametimeLimit - (clock() - gameTimer) / 1000;
 		string timeString = to_string(time);
 		const char * timeChar = timeString.c_str();
 
@@ -98,12 +102,14 @@ public:
 		if (time <= 0) 
 		{
 			gameScreen = 2;
+			exitTimer = clock();
 
 			if (grid.getScore() > highScore)
 			{
 				highScore = grid.getScore();
 			}
 		}
+
 	}
 
 	void playOutro() 
@@ -112,10 +118,8 @@ public:
 		(
 			chrono::system_clock::now().time_since_epoch() / 300
 		);
-		chrono::seconds sec = chrono::duration_cast<chrono::seconds>
-		(
-			chrono::system_clock::now().time_since_epoch()
-		);
+
+		int time = retrytimeLimit - (clock() - exitTimer) / 1000;
 
 		string scoreString = to_string(grid.getScore());
 		const char * scoreChar = scoreString.c_str();
@@ -124,12 +128,12 @@ public:
 		const char * bestScoreChar = bestScoreString.c_str();
 
 		mEngine.Write("GAME OVER", 290, 150, 0);
-		mEngine.Write("Your Score :", 250, 250, 0);
+		mEngine.Write("Your Score :", 240, 250, 0);
 		mEngine.Write(scoreChar, 475, 250, 0);
-		mEngine.Write("Your Best :", 260, 350, 0);
+		mEngine.Write("Your Best :", 250, 350, 0);
 		mEngine.Write(bestScoreChar, 475, 350, 0);
 
-		if (ms.count() > 3)
+		if (time <= 0)
 		{
 			if (ms.count() % 2 != 0)
 				mEngine.Write("click to restart game", 240, 500, 0);
@@ -140,6 +144,7 @@ public:
 				grid = *new Grid(330, 440, 8);
 			}
 		}
+
 	}
 };
 

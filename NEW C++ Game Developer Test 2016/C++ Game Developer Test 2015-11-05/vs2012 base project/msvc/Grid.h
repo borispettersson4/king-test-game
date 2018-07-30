@@ -11,6 +11,12 @@ private:
 	int xPos;
 	int yPos;
 	int score;
+
+	void filterGemSelection(int column, int row, Gem &currentGem);
+	void swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB);
+	void manageSelection(King::Engine& engine);
+	bool findMatchingGems();
+
 public:
 	Grid();
 	Grid(float x, float y, int size);
@@ -24,13 +30,12 @@ public:
 	void setSize(int size);
 	void setSpeed(float s);
 	void setScore(int s);
+
 	void update(King::Engine& engine);
 	void display(King::Engine& engine);
-	void swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB);
-	void manageSelection(King::Engine& engine);
-	void updateScore();
+	void clearSelection();
 
-	bool findMatchingGems();
+	bool isMultipleSelected(int gemCount);
 	bool isFull();
 	bool isDeleting();
 

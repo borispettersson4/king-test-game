@@ -2,29 +2,48 @@
 
 #include <king/Engine.h>
 #include <king/Updater.h>
-#include <c:\Users\Boris\Desktop\Development\king-test-game\NEW C++ Game Developer Test 2016\C++ Game Developer Test 2015-11-05\vs2012 base project\msvc\Grid.h>
+#include "..\msvc\Grid.h"
 
-int gameStage = 0;
+int gameScreen = 0;
+int bestScore = 0;
 
 //**********************************************************************
 
 class CrushMiner : public King::Updater {
 private:
 	King::Engine mEngine;
-	float mRotation;
-	float mCurrentDiamondX;
-	float mCurrentDiamondY;
-
 	Grid grid;
-
 	clock_t startTime;
 	int timeLimit = 60;
 
 public:
-
 	CrushMiner()
-		: mEngine("./assets")
-		, mRotation(0.0f) {
+		: mEngine("./assets") {
+	}
+
+	void Start()
+	{
+
+		grid = *new Grid(330, 440, 8);
+		mEngine.Start(*this);
+	}
+
+	void Update()
+	{
+		switch (gameScreen)
+		{
+		case 0:
+			playIntro();
+			break;
+
+		case 1:
+			playGame();
+			break;
+
+		case 2:
+			playOutro();
+			break;
+		}
 	}
 
 	void playIntro() 
@@ -48,7 +67,7 @@ public:
 
 			if (mEngine.GetMouseButtonDown())
 			{
-				gameStage = 1;
+				gameScreen = 1;
 				grid.setSpeed(1);
 				startTime = clock();
 				grid.setScore(0);
@@ -78,7 +97,7 @@ public:
 
 		if (time <= 0) 
 		{
-			gameStage = 2;
+			gameScreen = 2;
 		}
 	}
 
@@ -91,42 +110,26 @@ public:
 
 		string scoreString = to_string(grid.getScore());
 		const char * scoreChar = scoreString.c_str();
+		
+		string bestScoreString = to_string(grid.getScore());
+		const char * bestScoreChar = bestScoreString.c_str();
+
+		if (grid.getScore() > bestScore)
+			bestScore = grid.getScore();
 
 		mEngine.Write("GAME OVER", 305, 150, 0);
 		mEngine.Write("Your Score :", 250, 250, 0);
 		mEngine.Write(scoreChar, 450, 250, 0);
+		mEngine.Write("Your Best :", 250, 350, 0);
+		mEngine.Write(bestScoreChar, 450, 350, 0);
 
 		if (ms.count() % 2 != 0)
 			mEngine.Write("click to restart game", 255, 500, 0);
 
 		if (mEngine.GetMouseButtonDown())
 		{
-			gameStage = 0;
+			gameScreen = 0;
 			grid = *new Grid(330, 440, 8);
-		}
-	}
-
-	void Start() 
-	{
-		grid = *new Grid(330, 440, 8);
-		mEngine.Start(*this);
-	}
-
-	void Update() 
-	{
-		switch (gameStage)
-		{
-		case 0:
-			playIntro();
-		break;
-
-		case 1:
-			playGame();
-		break;
-
-		case 2:
-			playOutro();
-		break;
 		}
 	}
 };

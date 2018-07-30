@@ -64,7 +64,6 @@ void Grid::update(King::Engine& engine)
 	for (int i = 0; i < columns.size(); i++)
 	{
 		columns.at(i).update(engine);
-		updateScore();
 	}
 	if (isFull())
 	{
@@ -94,31 +93,31 @@ void Grid::manageSelection(King::Engine& engine)
 					(j == 0 || !columns.at(i).getGem(j - 1).isSelected()) &&
 					(j == columns.at(i).getGems().size() - 1 || !columns.at(i).getGem(j + 1).isSelected()))
 				{
-					columns.at(i).selectGem(j, true);
+					filterGemSelection(i,j, columns.at(i).getGem(j));
 				}
 
 				else if (i > 0 && columns.at(i - 1).getGem(j).isSelected())
 				{
 					swap(columns.at(i - 1).getSlot(j), columns.at(i).getSlot(j),
-						columns.at(i - 1).getGem(j), columns.at(i).getGem(j));
+					columns.at(i - 1).getGem(j), columns.at(i).getGem(j));
 				}
 
 				else if (i < columns.size() - 1 && columns.at(i + 1).getGem(j).isSelected())
 				{
 					swap(columns.at(i + 1).getSlot(j), columns.at(i).getSlot(j),
-						columns.at(i + 1).getGem(j), columns.at(i).getGem(j));
+					columns.at(i + 1).getGem(j), columns.at(i).getGem(j));
 				}
 
 				else if (j > 0 && columns.at(i).getGem(j - 1).isSelected())
 				{
 					swap(columns.at(i).getSlot(j - 1), columns.at(i).getSlot(j),
-						columns.at(i).getGem(j - 1), columns.at(i).getGem(j));
+					columns.at(i).getGem(j - 1), columns.at(i).getGem(j));
 				}
 
 				else if (j < columns.at(i).getGems().size() - 1 && columns.at(i).getGem(j + 1).isSelected())
 				{
 					swap(columns.at(i).getSlot(j + 1), columns.at(i).getSlot(j),
-						columns.at(i).getGem(j + 1), columns.at(i).getGem(j));
+					columns.at(i).getGem(j + 1), columns.at(i).getGem(j));
 				}
 			}
 		}
@@ -185,18 +184,64 @@ void Grid::swap(Slot &slotA, Slot &slotB, Gem &gemA, Gem &gemB)
 			}
 }
 
-void Grid::updateScore() 
+void Grid::clearSelection() 
 {
 	for (int i = 0; i < columns.size(); i++)
 	{
 		for (int j = 0; j < columns.at(i).getGems().size(); j++)
 		{
-			if (columns.at(i).getGem(j).isMarkedForDeletion()) 
+			columns.at(i).getGem(j).select(false);
+		}
+	}
+}
+
+void Grid::filterGemSelection(int i, int j, Gem &currentGem) 
+{
+	static Gem* gemA = NULL;
+	static Gem* gemB = NULL;
+
+	if (gemA == NULL && !currentGem.isMarkedForSwap())
+	{
+		gemA = &currentGem;
+		gemA->select(true);
+	}
+	else if (gemB == NULL && !currentGem.isMarkedForSwap())
+	{
+		gemB = &currentGem;
+		gemB->select(true);
+	}
+
+	else if (&currentGem == gemA || &currentGem == gemB)
+	{
+		currentGem.select(true);
+	}
+
+	else if (gemA != NULL && gemB != NULL && !gemA->isMarkedForSwap() && !gemB->isMarkedForSwap())
+	{
+		gemA->select(false);
+		gemA = &currentGem;
+		gemA->select(true);
+		gemB->select(false);
+		gemB = NULL;
+	}
+}
+
+bool Grid::isMultipleSelected(int gemCount)
+{
+	int selectedGems = 0;
+
+	for (int i = 0; i < columns.size(); i++)
+	{
+		for (int j = 0; j < columns.at(i).getGems().size(); j++)
+		{
+			if (columns.at(i).getGem(j).isSelected())
 			{
-				score++;
+				selectedGems++;
 			}
 		}
 	}
+
+	return (selectedGems >= gemCount);
 }
 
 bool Grid::findMatchingGems()
@@ -213,6 +258,7 @@ bool Grid::findMatchingGems()
 				columns.at(j).markForDeletion(i);
 				columns.at(j).markForDeletion(i + 1);
 				columns.at(j).markForDeletion(i + 2);
+				score += 10;
 				foundMatch = true;
 			}
 		}
@@ -226,6 +272,7 @@ bool Grid::findMatchingGems()
 					columns.at(j).markForDeletion(i);
 					columns.at(j + 1).markForDeletion(i);
 					columns.at(j + 2).markForDeletion(i);
+					score += 10;
 					foundMatch = true;
 				}
 		}

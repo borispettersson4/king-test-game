@@ -1,0 +1,28 @@
+﻿  main.cpp
+  Grid.cpp
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(41): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(77): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(85): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(87): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(105): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(117): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(189): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(191): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(233): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(235): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(254): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(256): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(280): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\desktop\development\king-test-game\new c++ game developer test 2016\test submission - boris pettersson\project\crush miner - boris pettersson\msvc\grid.cpp(290): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  0 of 660 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    18 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Worktest.vcxproj -> C:\Users\Boris\Desktop\Development\king-test-game\NEW C++ Game Developer Test 2016\Test Submission - Boris Pettersson\Project\Crush Miner - Boris Pettersson\bin\Worktest.exe
